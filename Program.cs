@@ -7,6 +7,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// add service for IConfiguration
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddScoped<EmpleadoServicio>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
