@@ -15,21 +15,29 @@ public class EmpleadoServicio {
   public List<Empleado> ObtenerEmpleados() {
     var empleados = new List<Empleado>();
 
-    using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
-      connection.Open();
-      var command = new SqlCommand("sp_GetAllEmpleados", connection);
-      command.CommandType = CommandType.StoredProcedure;
-      var dataReader = command.ExecuteReader();
+    try {
+      using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+        connection.Open();
+        var command = new SqlCommand("sp_GetAllEmpleados", connection);
+        command.CommandType = CommandType.StoredProcedure;
+        var dataReader = command.ExecuteReader();
 
-      while (dataReader.Read()) {
-        var empleado = new Empleado();
-        empleado.Numero = Convert.ToInt32(dataReader["Numero"]);
-        empleado.Nombre = Convert.ToString(dataReader["Nombre"]);
-        empleado.RolID = Convert.ToInt32(dataReader["RolID"]);
-        empleado.SueldoBaseHora = Convert.ToDecimal(dataReader["SueldoBaseHora"]);
-        empleados.Add(empleado);
+        while (dataReader.Read()) {
+          var empleado = new Empleado();
+          empleado.Numero = Convert.ToInt32(dataReader["Numero"]);
+          empleado.Nombre = Convert.ToString(dataReader["Nombre"]);
+          empleado.RolID = Convert.ToInt32(dataReader["RolID"]);
+          empleado.SueldoBaseHora = Convert.ToDecimal(dataReader["SueldoBaseHora"]);
+          empleados.Add(empleado);
+        }
+
+        return empleados;
       }
+      
+    } 
+    catch (System.Exception) {
+      throw;
     }
-    return empleados;
+
   }
 }
