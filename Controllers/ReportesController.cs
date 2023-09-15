@@ -12,8 +12,8 @@ public class ReportesController: ControllerBase {
     _servicio = servicio;
   }
 
-  [HttpGet("{Numero}")]
-  public IActionResult Empleados(int Numero) {
-    return Ok(_servicio.GenerarReporte(Numero));
+  [HttpGet("{NumeroEmpleado}")]
+  public IActionResult Reporte(int NumeroEmpleado) {
+    return Ok(_servicio.GenerarReporte(NumeroEmpleado));
   }
 }

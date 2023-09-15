@@ -13,7 +13,7 @@ public class EmpleadoServicio {
     _configuration = configuration;
   }
 
-  public Empleado ObtenerEmpleado(int Numero) {
+  public Empleado ObtenerEmpleadoPorNumero(int Numero) {
     var empleado = new Empleado();
 
     try {
@@ -58,7 +58,7 @@ public class EmpleadoServicio {
         while (dataReader.Read()) {
           var empleado = new Empleado();
           empleado.Numero = Convert.ToInt32(dataReader["Numero"]);
-          empleado.Nombre = Convert.ToString(dataReader["Nombre"]);
+          empleado.Nombre = Convert.ToString(dataReader["Nombre"]) ?? string.Empty;
           empleado.RolID = Convert.ToInt32(dataReader["RolID"]);
           empleado.SueldoBaseHora = Convert.ToDecimal(dataReader["SueldoBaseHora"]);
           empleados.Add(empleado);
