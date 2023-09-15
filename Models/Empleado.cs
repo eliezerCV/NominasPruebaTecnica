@@ -5,4 +5,5 @@ public class Empleado {
   public string Nombre { get; set; } = "";
   public int RolID { get; set; }
   public decimal SueldoBaseHora { get; set; }
+  public Rol? Rol { get; set; }
 }

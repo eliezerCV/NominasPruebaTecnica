@@ -19,16 +19,21 @@ public class EmpleadoServicio {
     try {
       using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
         connection.Open();
-        var command = new SqlCommand("sp_ObtenerEmpleadoPorNumero", connection);
+        var command = new SqlCommand("sp_ObtenerEmpleadoYRolPorNumero", connection);
         command.CommandType = CommandType.StoredProcedure;
-        command.Parameters.AddWithValue("@Numero", Numero);
+        command.Parameters.AddWithValue("@NumeroEmpleado", Numero);
         var dataReader = command.ExecuteReader();
 
-        while (dataReader.Read()) {
+        if (dataReader.Read()) {
           empleado.Numero = Convert.ToInt32(dataReader["Numero"]);
-          empleado.Nombre = Convert.ToString(dataReader["Nombre"]);
+          empleado.Nombre = Convert.ToString(dataReader["EmpleadoNombre"]) ?? string.Empty;
           empleado.RolID = Convert.ToInt32(dataReader["RolID"]);
           empleado.SueldoBaseHora = Convert.ToDecimal(dataReader["SueldoBaseHora"]);
+          empleado.Rol = new Rol() {
+            ID = Convert.ToInt32(dataReader["IDRol"]),
+            Nombre = Convert.ToString(dataReader["RolNombre"]) ?? string.Empty,
+            BonoPorHora = Convert.ToDecimal(dataReader["BonoPorHora"])
+          };
         }
 
         return empleado;
