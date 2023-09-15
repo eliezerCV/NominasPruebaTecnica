@@ -20,6 +20,7 @@ builder.Services.AddCors(options =>
 // add service for IConfiguration
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<EmpleadoServicio>();
+builder.Services.AddScoped<ReportesServicio>();
 
 
 

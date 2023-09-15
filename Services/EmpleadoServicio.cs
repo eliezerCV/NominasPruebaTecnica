@@ -13,6 +13,32 @@ public class EmpleadoServicio {
     _configuration = configuration;
   }
 
+  public Empleado ObtenerEmpleado(int Numero) {
+    var empleado = new Empleado();
+
+    try {
+      using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+        connection.Open();
+        var command = new SqlCommand("sp_ObtenerEmpleadoPorNumero", connection);
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@Numero", Numero);
+        var dataReader = command.ExecuteReader();
+
+        while (dataReader.Read()) {
+          empleado.Numero = Convert.ToInt32(dataReader["Numero"]);
+          empleado.Nombre = Convert.ToString(dataReader["Nombre"]);
+          empleado.RolID = Convert.ToInt32(dataReader["RolID"]);
+          empleado.SueldoBaseHora = Convert.ToDecimal(dataReader["SueldoBaseHora"]);
+        }
+
+        return empleado;
+      }
+      
+    } 
+    catch (System.Exception) {
+      throw;
+    }
+  }
 
   public List<Empleado> ObtenerEmpleados() {
     var empleados = new List<Empleado>();
