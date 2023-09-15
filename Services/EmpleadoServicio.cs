@@ -7,6 +7,8 @@ public class EmpleadoServicio {
 
   private readonly IConfiguration _configuration;
 
+  private decimal SueldoBaseHora = 30;
+
   public EmpleadoServicio(IConfiguration configuration) {
     _configuration = configuration;
   }
@@ -38,6 +40,42 @@ public class EmpleadoServicio {
     catch (System.Exception) {
       throw;
     }
+  }
 
+  public bool CrearEmpleado(Empleado empleado) {
+    try {
+      using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+        connection.Open();
+        var command = new SqlCommand("sp_CrearEmpleado", connection);
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@Nombre", empleado.Nombre);
+        command.Parameters.AddWithValue("@RolID", empleado.RolID);
+        command.Parameters.AddWithValue("@SueldoBaseHora", SueldoBaseHora);
+        command.ExecuteNonQuery();
+        return true;
+      }
+    } 
+    catch (System.Exception) {
+      throw;
+    }
+  }
+
+  public bool ModificarEmpleado(Empleado empleado, int Numero) {
+    try {
+      using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+        connection.Open();
+        var command = new SqlCommand("sp_ModificarEmpleado", connection);
+        command.CommandType = CommandType.StoredProcedure;
+        command.Parameters.AddWithValue("@Numero", Numero);
+        command.Parameters.AddWithValue("@Nombre", empleado.Nombre);
+        command.Parameters.AddWithValue("@RolID", empleado.RolID);
+        command.Parameters.AddWithValue("@SueldoBaseHora", empleado.SueldoBaseHora);
+        command.ExecuteNonQuery();
+        return true;
+      }
+    } 
+    catch (System.Exception) {
+      throw;
+    }
   }
 }

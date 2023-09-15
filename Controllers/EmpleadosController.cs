@@ -16,4 +16,14 @@ public class EmpleadosController : Controller {
   public IActionResult Index() {
     return Ok(_servicio.ObtenerEmpleados());
   }
+
+  [HttpPost]
+  public IActionResult CrearEmpleado([FromBody] Empleado empleado) {
+    return Ok(_servicio.CrearEmpleado(empleado));
+  }
+
+  [HttpPut("{Numero}")]
+  public IActionResult ModificarEmpleado([FromBody] Empleado empleado, int Numero) {
+    return Ok(_servicio.ModificarEmpleado(empleado, Numero));
+  }
 }
