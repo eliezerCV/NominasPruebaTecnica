@@ -41,7 +41,7 @@ public class ReportesServicio {
     int HorasTrabajadas = HorasLaborales * DiasLabolaresPorSemana * SemanasPorMes;
     reporte.HorasTrabajadas = HorasTrabajadas;
     reporte.CantidadEntregas = 0;
-    reporte.BonoPorEntrega = BonoPorEntrega;
+    reporte.BonoPorEntrega = BonoPorEntrega * reporte.CantidadEntregas;
     reporte.SueldoBruto = HorasTrabajadas * (SueldoBaseHora + reporte.BonoPorHora)/* + reporte.CantidadEntregas * BonoPorEntrega*/;
     reporte.ValeDespensa = reporte.SueldoBruto * PorcentajeValeDespensa;
     decimal porcentajeISRGravable = CalcularISRPorcentaje(reporte.SueldoBruto);

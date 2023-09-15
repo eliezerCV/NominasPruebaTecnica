@@ -21,6 +21,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<EmpleadoServicio>();
 builder.Services.AddScoped<ReportesServicio>();
+builder.Services.AddScoped<MovimientosServicio>();
 
 
 
